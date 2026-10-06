@@ -1,12 +1,11 @@
-
 import React, { useState } from "react";
-export default function AddEntryForm({ season, day, onAdd }) {
+export default function AddEntryForm({ year, season, day, onAdd }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [total, setTotal] = useState(12);
   const [loading, setLoading] = useState(false);
   async function submit(e){ e.preventDefault(); if(!name.trim()) return; setLoading(true);
-    await fetch("/api/entries", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ season, day, name: name.trim(), total: Number(total)||12 }) });
+    await fetch("/api/entries", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ year, season, day, name: name.trim(), total: Number(total)||12 }) });
     setName(""); setTotal(12); setOpen(false); setLoading(false); if(onAdd) onAdd();
   }
   return (

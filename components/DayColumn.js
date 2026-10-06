@@ -1,17 +1,16 @@
-
 import React from "react";
 import EntryItem from "./EntryItem";
 import AddEntryForm from "./AddEntryForm";
 import useSWR from "swr";
 const fetcher = (url) => fetch(url).then(r => r.json());
-export default function DayColumn({ season, day }) {
-  const { data, mutate } = useSWR(`/api/entries?season=${encodeURIComponent(season)}&day=${encodeURIComponent(day)}`, fetcher);
+export default function DayColumn({ year, season, day }) {
+  const { data, mutate } = useSWR(`/api/entries?year=${year}&season=${encodeURIComponent(season)}&day=${encodeURIComponent(day)}`, fetcher);
   const entries = (data && data.entries) || [];
   return (
     <div className="day-column" role="region" aria-label={day}>
       <div className="day-header">
         <h3>{day}</h3>
-        <AddEntryForm season={season} day={day} onAdd={() => mutate()} />
+        <AddEntryForm year={year} season={season} day={day} onAdd={() => mutate()} />
       </div>
       <div className="entries">
         {entries.length === 0 ? <div className="empty">No entries yet — add one 👇</div> :
